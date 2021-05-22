@@ -31,6 +31,7 @@ class PhotoController extends Controller
 
             $photo = new Photo();
             $photo->path = 'storage/' . $file_name;
+            $photo->tags = '';
             $photo->save();
 
             return ['success' => 'success!'];
@@ -57,7 +58,9 @@ class PhotoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $photo = Photo::find($id);
+        $photo->tags = $request->tags;
+        $photo->save();
     }
 
     /**

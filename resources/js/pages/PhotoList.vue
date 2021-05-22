@@ -4,7 +4,7 @@
       <b-row cols="3">
         <b-col v-for="photo in photos" :key="photo.id">
           <div v-bind="mainProps">
-            <b-img thumbnail fluid round :src="photo.path" @click="showDetail(photo.path)"/>
+            <b-img thumbnail fluid round :src="photo.path" @click="showDetail(photo)"/>
             <b-icon-trash variant="light" scale="1.5" class="trash rounded bg-dark" v-if="editMode" @click="deletePhoto(photo.id)"/>
           </div>
         </b-col>
@@ -20,6 +20,7 @@
     <b-modal ref="detail" body-bg-variant="dark" size="lg" title="photo"
       hide-header hide-footer centered>
       <b-img :src="this.path" fluid-grow></b-img>
+      <b-form-tags v-model="tags"/>
     </b-modal>
   </div>
 </template>
@@ -43,6 +44,9 @@ export default {
         class: 'my-4',
       },
       path: '',
+      tags: [],
+      id: 0,
+      photo: null,
     };
   },
   methods: {
@@ -68,8 +72,11 @@ export default {
         this.refresh();
       }
     },
-    showDetail(path) {
-      this.path = path;
+    showDetail(photo) {
+      this.id = photo.id;
+      this.path = photo.path;
+      this.tags = photo.tags.split(',');
+      this.photo = photo;
       this.$refs.detail.show();
     }
   },
@@ -80,6 +87,10 @@ export default {
       },
       immediate: true,
     },
+    tags() {
+      this.photo.tags = this.tags.join();
+      axios.put('/api/photos/' + this.id, this.photo);
+    }
   },
 };
 </script>
