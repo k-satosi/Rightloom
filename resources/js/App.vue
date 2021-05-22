@@ -6,13 +6,23 @@
           <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav class="ml-auto">
             <b-nav-item @click="showForm = !showForm">
-              <b-icon-cloud-upload/>
+              <b-button>
+                <b-icon-cloud-upload/>
+              </b-button>
             </b-nav-item>
             <b-nav-item @click="editMode = !editMode">
-              <b-icon-pencil-square/>
+              <b-button>
+                <b-icon-pencil-square/>
+              </b-button>
             </b-nav-item>
           </b-navbar-nav>
-          <b-navbar-nav class="ml-auto">
+            <b-navbar-nav class="ml-auto">
+              <b-nav-form>
+              <b-form-input v-model="keyword" size="sm" class="mr-sm-2" placeholder="Search"/>
+              <b-button>
+                <b-icon-search/>
+              </b-button>
+              </b-nav-form>
             <b-nav-item-dropdown right>
               <template #button-content>
                 <em>User</em>
@@ -31,7 +41,7 @@
     <main>
       <div class="container">
         <!-- <router-view/> -->
-        <PhotoList ref="photoList" :editMode="this.editMode"/>
+        <PhotoList ref="photoList" :keyword="this.keyword" :editMode="this.editMode"/>
       </div>
     </main>
   </div>
@@ -50,6 +60,7 @@ export default {
     return {
       editMode: false,
       showForm: false,
+      keyword: '',
     };
   },
   methods: {

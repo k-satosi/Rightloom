@@ -2,20 +2,13 @@
   <div class="photo-list">
     <b-container fluid="p-4">
       <b-row cols="3">
-        <b-col v-for="photo in photos" :key="photo.id">
+        <b-col v-for="photo in filtered" :key="photo.id">
           <div v-bind="mainProps">
             <b-img thumbnail fluid round :src="photo.path" @click="showDetail(photo)"/>
             <b-icon-trash variant="light" scale="1.5" class="trash rounded bg-dark" v-if="editMode" @click="deletePhoto(photo.id)"/>
           </div>
         </b-col>
       </b-row>
-
-    <!-- <Photo
-      width="25%"
-      v-for="photo in photos"
-      :key="photo.id"
-      :item="photo"
-    /> -->
     </b-container>
     <b-modal ref="detail" body-bg-variant="dark" size="lg" title="photo"
       hide-header hide-footer centered>
@@ -35,6 +28,17 @@ export default {
   },
   props: {
     editMode: false,
+    keyword: '',
+  },
+  computed: {
+    filtered() {
+      if (!this.keyword) {
+        return this.photos;
+      }
+      return this.photos.filter(photo => {
+        return photo.tags && photo.tags.includes(this.keyword);
+      });
+    },
   },
   data() {
     return {
@@ -47,6 +51,7 @@ export default {
       tags: [],
       id: 0,
       photo: null,
+      filteres: null,
     };
   },
   methods: {
@@ -75,7 +80,7 @@ export default {
     showDetail(photo) {
       this.id = photo.id;
       this.path = photo.path;
-      this.tags = photo.tags.split(',');
+      this.tags = photo.tags ? photo.tags.split(',') : [];
       this.photo = photo;
       this.$refs.detail.show();
     }
@@ -88,8 +93,11 @@ export default {
       immediate: true,
     },
     tags() {
-      this.photo.tags = this.tags.join();
-      axios.put('/api/photos/' + this.id, this.photo);
+      const updatedTags = this.tags ? this.tags.join() : '';
+      if (updatedTags !== this.photo.tags) {
+        this.photo.tags = updatedTags;
+        axios.put('/api/photos/' + this.id, this.photo);
+      }
     }
   },
 };
