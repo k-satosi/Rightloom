@@ -1,12 +1,27 @@
 <template>
   <div>
     <b-form @submit="onSubmit">
-      <b-form-file v-model="file" placeholder="Choose a file or drop it here..."
-        drop-placeholder="Drop file here..."></b-form-file>
-      <b-container fluid class="p-4">
-        <b-img fluid-grow v-if="preview !== null" :src="preview"/>
+      <b-form-file
+        v-model="file"
+        placeholder="Choose a file or drop it here..."
+        drop-placeholder="Drop file here..."
+      />
+      <b-container
+        fluid
+        class="p-4"
+      >
+        <b-img
+          v-if="preview !== null"
+          fluid-grow
+          :src="preview"
+        />
       </b-container>
-      <b-button type="submit" variant="primary">Submit</b-button>
+      <b-button
+        type="submit"
+        variant="primary"
+      >
+        Submit
+      </b-button>
     </b-form>
   </div>
 </template>
@@ -21,25 +36,6 @@ export default {
       preview: null,
     };
   },
-  methods: {
-    onSubmit(event) {
-      event.preventDefault();
-      console.log(event);
-      console.log(this.file);
-
-      let data = new FormData();
-      data.append("file", this.file);
-      
-      axios.post("/api/photos/", data)
-      .then(response => {
-        console.log('success');
-        this.$emit("uploaded");
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    }
-  },
   watch: {
     file() {
       const reader = new FileReader();
@@ -51,6 +47,25 @@ export default {
       } else {
         this.preview = null;
       }
+    },
+  },
+  methods: {
+    onSubmit(event) {
+      event.preventDefault();
+      console.log(event);
+      console.log(this.file);
+
+      let data = new FormData();
+      data.append("file", this.file);
+      
+      axios.post("/api/photos/", data)
+      .then(() => {
+        console.log('success');
+        this.$emit("uploaded");
+      })
+      .catch(err => {
+        console.log(err);
+      });
     },
   },
 };
