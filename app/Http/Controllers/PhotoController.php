@@ -12,9 +12,11 @@ class PhotoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Photo::all();
+        $id = $request->user()->id;
+        $photos = Photo::where('user_id', $id)->get();
+        return $photos;
     }
 
     /**
@@ -32,7 +34,7 @@ class PhotoController extends Controller
             $photo = new Photo();
             $photo->path = 'storage/' . $file_name;
             $photo->tags = '';
-            $photo->save();
+            Auth::user()->photos()->save($photo);
 
             return ['success' => 'success!'];
         }

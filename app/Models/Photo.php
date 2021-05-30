@@ -12,4 +12,8 @@ class Photo extends Model
     protected $fillable = [
         'path',
     ];
+
+    public function owner() {
+        return $this->belongsTo(User::class);
+    }
 }

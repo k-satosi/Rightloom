@@ -24,7 +24,7 @@ class LoginController extends Controller
 
             return response()->json(['token' => $token], Response::HTTP_OK);
         }
-        return response()->json('Login failed', Response::HTTP_INTERNAL_SERVER_ERROR);
+        return response()->json('Login failed', Response::HTTP_UNAUTHORIZED);
     }
 
     public function logout(Request $request) {

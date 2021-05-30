@@ -18,6 +18,8 @@ class CreatePhotosTable extends Migration
             $table->string('path');
             $table->string('tags')->nullable();
             $table->timestamps();
+
+            $table->foreignId('user_id');
         });
     }
 

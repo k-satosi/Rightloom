@@ -26,6 +26,14 @@
                   Login
                 </b-button>
               </b-row>
+              <b-row class="my-2">
+                <b-alert
+                  v-model="showLoginError"
+                  variant="warning"
+                >
+                  {{ loginErrors }}
+                </b-alert>
+              </b-row>
             </b-form>
           </b-container>
         </b-tab>
@@ -91,6 +99,15 @@ export default {
   computed: {
     apiStatus() {
       return this.$store.state.auth.apiStatus;
+    },
+    loginErrors() {
+      return this.$store.state.auth.loginErrorMessages;
+    },
+    registerErrors() {
+      return this.$store.state.auth.registerErrorMessages;
+    },
+    showLoginError() {
+      return !!this.loginErrors;
     }
   },
   methods: {
