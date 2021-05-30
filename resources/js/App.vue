@@ -2,7 +2,7 @@
   <div>
     <header>
       <b-navbar type="dark">
-        <b-navbar-brand href="#">
+        <b-navbar-brand @click="redirectToHome">
           Rightloom
         </b-navbar-brand>
         <b-collapse
@@ -33,14 +33,17 @@
                 <b-icon-search />
               </b-button>
             </b-nav-form>
-            <b-nav-item-dropdown right>
+            <b-nav-item-dropdown right v-if="isLogin">
               <template #button-content>
-                <em>User</em>
+                <em>{{username}}</em>
               </template>
-              <b-dropdown-item href="#">
-                Sign Out
-              </b-dropdown-item>
+              <b-dropdown-item-button @click="logout">
+                Sign out
+              </b-dropdown-item-button>
             </b-nav-item-dropdown>
+            <b-nav-item right v-if="!isLogin" @click="redirectToLogin">
+              Sign in
+            </b-nav-item>
           </b-navbar-nav>
         </b-collapse>
       </b-navbar>
@@ -57,11 +60,7 @@
     </header>
     <main>
       <div class="container">
-        <PhotoList
-          ref="photoList"
-          :keyword="keyword"
-          :edit-mode="editMode"
-        />
+        <router-view ref="photoList" :keyword="keyword" :edit-mode="editMode"/>
       </div>
     </main>
   </div>
@@ -83,12 +82,30 @@ export default {
       keyword: '',
     };
   },
+  computed: {
+    isLogin() {
+      return this.$store.getters['auth/check'];
+    },
+    username() {
+      return this.$store.getters['auth/username'];
+    }
+  },
   methods: {
     refresh() {
       this.$refs.uploadForm.hide();
       this.$refs.photoList.refresh();
-    }
-  }
+    },
+    redirectToHome() {
+      this.$router.push('/');
+    },
+    redirectToLogin() {
+      this.$router.push('/login');
+    },
+    logout() {
+      this.$store.dispatch("auth/logout");
+      this.$router.push('/login');
+    },
+  },
 };
 </script>
 
