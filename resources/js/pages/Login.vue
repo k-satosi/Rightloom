@@ -1,82 +1,80 @@
 <template>
   <div>
-    <b-card
-      no-body
-      bg-variant="dark"
+    <b-tabs
+      content-class="mt-3"
+      active-nav-item-class="text-light"
     >
-      <b-tabs card>
-        <b-tab title="Login">
-          <b-container fluid>
-            <b-form @submit="login">
-              <b-row class="my-2">
-                <b-form-input
-                  v-model="loginForm.email"
-                  placeholder="Id"
-                />
-              </b-row>
-              <b-row class="my-2">
-                <b-form-input
-                  v-model="loginForm.password"
-                  type="password"
-                  placeholder="Password"
-                />
-              </b-row>
-              <b-row class="my-2">
-                <b-button type="submit">
-                  Login
-                </b-button>
-              </b-row>
-              <b-row class="my-2">
-                <b-alert
-                  v-model="showLoginError"
-                  variant="warning"
-                >
-                  {{ loginErrors }}
-                </b-alert>
-              </b-row>
-            </b-form>
-          </b-container>
-        </b-tab>
-        <b-tab title="Register">
-          <b-container fluid>
-            <b-form @submit="register">
-              <b-row class="my-2">
-                <b-form-input
-                  v-model="registerForm.name"
-                  placeholder="Name"
-                />
-              </b-row>
-              <b-row class="my-2">
-                <b-form-input
-                  v-model="registerForm.email"
-                  type="email"
-                  placeholder="Email"
-                />
-              </b-row>
-              <b-row class="my-2">
-                <b-form-input
-                  v-model="registerForm.password"
-                  type="password"
-                  placeholder="Password"
-                />
-              </b-row>
-              <b-row class="my-2">
-                <b-form-input
-                  v-model="registerForm.passwordConfirmation"
-                  type="password"
-                  placeholder="Password confirmation"
-                />
-              </b-row>
-              <b-row class="my-2">
-                <b-button type="submit">
-                  Register
-                </b-button>
-              </b-row>
-            </b-form>
-          </b-container>
-        </b-tab>
-      </b-tabs>
-    </b-card>
+      <b-tab title="Login">
+        <b-container fluid>
+          <b-form @submit="login">
+            <b-row class="my-2">
+              <b-form-input
+                v-model="loginForm.email"
+                placeholder="Id"
+              />
+            </b-row>
+            <b-row class="my-2">
+              <b-form-input
+                v-model="loginForm.password"
+                type="password"
+                placeholder="Password"
+              />
+            </b-row>
+            <b-row class="my-2">
+              <b-button type="submit">
+                Login
+              </b-button>
+            </b-row>
+            <b-row class="my-2">
+              <b-alert
+                v-model="showLoginError"
+                variant="warning"
+              >
+                {{ loginErrors }}
+              </b-alert>
+            </b-row>
+          </b-form>
+        </b-container>
+      </b-tab>
+      <b-tab title="Register">
+        <b-container fluid>
+          <b-form @submit="register">
+            <b-row class="my-2">
+              <b-form-input
+                v-model="registerForm.name"
+                placeholder="Name"
+              />
+            </b-row>
+            <b-row class="my-2">
+              <b-form-input
+                v-model="registerForm.email"
+                type="email"
+                placeholder="Email"
+              />
+            </b-row>
+            <b-row class="my-2">
+              <b-form-input
+                v-model="registerForm.password"
+                type="password"
+                placeholder="Password"
+              />
+            </b-row>
+            <b-row class="my-2">
+              <b-form-input
+                v-model="registerForm.passwordConfirmation"
+                type="password"
+                placeholder="Password confirmation"
+              />
+            </b-row>
+            <b-row class="my-2">
+              <b-button type="submit">
+                Register
+              </b-button>
+            </b-row>
+          </b-form>
+        </b-container>
+      </b-tab>
+    </b-tabs>
   </div>
 </template>
 
