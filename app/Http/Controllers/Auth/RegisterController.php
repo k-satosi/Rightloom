@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\Password;
 use \Symfony\Component\HttpFoundation\Response;
 
 class RegisterController extends Controller
@@ -18,12 +19,12 @@ class RegisterController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'email' => 'required|email',
-            'password' => 'required'
+            'email' => 'required|email|unique:users',
+            'password' => 'required|confirmed'
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->message(), Response::HTTP_UNPROCESSABLE_ENTITY);
+            return response()->json($validator->messages(), Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         User::create([

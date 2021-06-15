@@ -61,7 +61,7 @@
             </b-row>
             <b-row class="my-2">
               <b-form-input
-                v-model="registerForm.passwordConfirmation"
+                v-model="registerForm.password_confirmation"
                 type="password"
                 placeholder="Password confirmation"
               />
@@ -90,7 +90,7 @@ export default {
         name: "",
         email: "",
         password: "",
-        passwordConfirmation: "",
+        password_confirmation: "",
       },
     };
   },
