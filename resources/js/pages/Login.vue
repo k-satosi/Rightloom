@@ -71,6 +71,14 @@
                 Register
               </b-button>
             </b-row>
+            <b-row class="my-2">
+              <b-alert
+                v-model="showRegisterError"
+                variant="warning"
+              >
+                {{ registerErrors }}
+              </b-alert>
+            </b-row>
           </b-form>
         </b-container>
       </b-tab>
@@ -106,6 +114,9 @@ export default {
     },
     showLoginError() {
       return !!this.loginErrors;
+    },
+    showRegisterError() {
+      return !!this.registerErrors;
     }
   },
   methods: {
