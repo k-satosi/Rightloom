@@ -14,7 +14,7 @@ jobs:
         with:
           path: ./vendor
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          resotre-keys: |
+          restore-keys: |
             ${{ runner.os }}-composer-
       - name: composer install
         if: steps.cache.outputs.cache-hit != 'true'
