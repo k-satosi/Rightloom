@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   setup:
-    run-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
@@ -13,7 +13,7 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ./vendor
-          key: ${{ runner.os }}-composer-${{ hasFiles('**/composer.lock') }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           resotre-keys: |
             ${{ runner.os }}-composer-
       - name: composer install
